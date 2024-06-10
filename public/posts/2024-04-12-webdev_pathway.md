@@ -30,38 +30,157 @@ Another topic I would mention is design. When you are learning, for all means go
 
 ### React + Material UI
 
-As of writing this I have stopped updating the current site as I decided to learn React and rebuild the site with that instead. So far, it has been great, and although it took a lot more work, it looks MUCH better. At first I was pretty confused what React actually was, but from my still early understanding, it essentially allows you to build reusable elements for a website using JSX. To make this click more, lets say you have a button you want to add to your site with normal Javascript + CSS + HTML. You would need to add all three of those components each time you create a button, but in React you can build it once and reuse it by calling something as simple as ```<CommonButton />```. To then build on this idea, Material UI essentially is a collection or library of these predefined components like ```<CommonButton />``` that you can further combine and customize to build a site and build more intricate components. It. Is. Amazing. It was so cool remaking the library page with the functionality React provides out of the box.
+I decided React was the next logical step, and since I have 0 design talent in my body, I also decided to use Material UI. For those that do not know (As I did not), Material UI is basically a ton of prebuilt components that you can use to build more complex stuff. Let us use this current post as an example.
 
-Here is a sneak peak from what I have been doing so far. Keep in mind this is only after around a week of exposure to React.
+Withing this post is the header up top. This is actually made of a few components, lets look at the code.
 
-#### Old header
+```javascript
+const Header = ({title, open, toggleDrawer, children, themeToggle, theme}) => {
+  return (
+    <Box sx={HeaderStyles.wrapper}>
+      <Box sx={HeaderStyles.themeMode}>
+        <IconButton sx={{ ml: 1 }} onClick={themeToggle.toggleColorMode} color="inherit">
+          {theme.palette.mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+        </IconButton>
+        <Box sx={{marginLeft: '1rem', display: 'flex', alignContent: 'center', justifyContent: 'center'}}>
+          <Typography variant='h6'>
+            Nexus
+          </Typography>
+        </Box>
+      </Box>
+      <Box sx={HeaderStyles.title}>
+        {title}
+      </Box>
+      <Box sx={HeaderStyles.nav}>
+        <Navigation
+          open={open}
+          toggleDrawer={toggleDrawer}
+          children={children}
+        />
+      </Box>
+    </Box>
+  )
+}
 
-This is the current (old) header made from pure html and css.
+export default Header
+```
 
-![Old header]({{.site.baseurl}}/images/blog/oldSiteHeader.png)
+See those 3 lines in the top right of this site that expands the menu when you click it? That comes from this portion,
 
-#### New Header
+```javascript
+<Navigation
+          open={open}
+          toggleDrawer={toggleDrawer}
+          children={children}
+        />
+```
 
-This is the new header built from React+Material UI. The menu bar is nicely toggable and everything just looks.. better.
+Which itself is a component I built and imported from another file here,
 
-![Old header]({{.site.baseurl}}/images/blog/newSiteHeader1.png)
+```javascript
+const Navigation = ({open, toggleDrawer, children}) => {
+  const navigate = useNavigate();
+  const DrawerList = (
+    <Box sx={ navbarStyles.wrapper } role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+        {NavBarItems.map(
+          (item) => (
+            <ListItem
+              key={item.id}
+              disablePadding
+              onClick={() => navigate(item.route)}
+            >
+              <ListItemButton>
+                <ListItemIcon sx={navbarStyles.icons}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText sx={navbarStyles.text}>
+                  {item.text}
+                </ListItemText>
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
+      </List>
+    </Box>
+  );
 
-![Old header]({{.site.baseurl}}/images/blog/newSiteHeader2.png)
 
-#### Library Page
+  return (
+    <MenuButton
+      color='primary'
+      variant='text'
+      size='small'
+      onClick={toggleDrawer(true)}
+      sx={navbarStyles.menu}
+      >
+      <Drawer
+        open={open}
+        onClose={toggleDrawer(false)}
+        anchor='right'
+      >
+        {DrawerList}
+      </Drawer>
+      <MenuIcon />
+    </MenuButton>
+  )
+}
 
-This is a rough implementation of the library page. It will allow (mainly me) to quickly add books and rate them, then have them displayed on cards in this searchable menu. I am looking forwards with getting this integrated into a database compared to using manual file imports.
+export default Navigation
+```
 
-![Old header]({{.site.baseurl}}/images/blog/newSiteAddBook1.png)
+So, for a normal item like `<Box />`, which comes from `Material UI`, you can think of that as just another file like this that can take a bunch of arguments (props). To drive this concept home, lets use our menu button example which is the actual `Button` component you click when you press the menu.
 
-![Old header]({{.site.baseurl}}/images/blog/newSiteAddBook2.png)
+```javascript
+<MenuButton
+      color='primary'
+      variant='text'
+      size='small'
+      onClick={toggleDrawer(true)}
+      sx={navbarStyles.menu}
+      >
+```
 
-To further the previous explanation of React, the New Book screenshot is a reusable component that has a title (New Book) and two buttons at the bottom (Submit, Cancel). You can call this component in another file, and pass the title to it, and it will display this with your title. The other components are passed as children (The two input boxes and the ratings). These elements themselves are MaterialUI elements (TextFields and Ratings).
+We can see it is called `MenuButton`, and is getting passed 5 `props`. Now, if we head over to our MenuButton.js file, we will see how this is actually used.
 
-So essentially, you have a generic thing you make, lets call it Menu. This is the base one that only has the titles and the buttons. Then you create a more specific component that we will name AddBookMenu, which uses the generic Menu, and adds elements to it. We could then FURTHER this with more elements and so on.
+```javascript
+const MenuButton = ({sx, color, variant, size, onClick, disabled, children}) => {
+  return (
+    <Button
+      sx={sx}
+      color={color}
+      variant={variant}
+      size={size}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </Button>
+  )
+}
 
-This is the series I have been following which has been really great. However, I would suggest following along while applying it to your own project as it makes the information stick when you have to adapt it, compared to just copying code.
+export default MenuButton
+```
 
-[The Atypical Developer](https://www.youtube.com/watch?v=h9KevTtI5O0)
+As you can see, we are passing in those sx, color, etc `props` at the top here,
 
-I will continue to update this blog as I progress and expect to fully swap out to the React version within the month.
+```javascript
+const MenuButton = ({sx, color, variant, size, onClick, disabled, children}) 
+```
+
+and then using them in a base `Material UI` `Button`.
+
+```javascript
+<Button
+      sx={sx}
+      color={color}
+      variant={variant}
+      size={size}
+      onClick={onClick}
+      disabled={disabled}
+    >
+```
+
+This is essentially Material UI in a nutshell. You can use their comprehensive list of items to build out more advanced items for REUSABILITY.
+
+I have loved learning about Web Development topics, but this has also been done in my hobby time. I will still update the site with an About page and other stuff, and probably change around a lot of the looks, but I think I am now going to pivot back to DevOps since the framework for posting is now working.
