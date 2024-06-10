@@ -17,11 +17,10 @@ const Home = () => {
         Welcome to my collection!
       </Typography>
       <Image src={wip} fit='contain' showLoading/>
-      <Typography variant='subtitle1' sx={{border: 'red 1px solid'}}>
-        <ConstructionIcon />
+      <Typography variant='subtitle1' sx={{borderBottom: 'red 1px solid'}}>
         This website is currently under heavy construction.
-        <ConstructionIcon />
       </Typography>
+      <ConstructionIcon />
       <Typography variant='subtitle1' sx={{borderBottom: '1px solid red'}}>
       </Typography>
       <br />
