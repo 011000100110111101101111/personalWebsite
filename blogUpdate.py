@@ -55,7 +55,7 @@ def main():
   markdown_files = list_markdown_files(directory_path)
   # Sort the filenames based on the extracted date
   sorted_filenames = sorted(markdown_files, reverse=True)
-  most_recent_three = sorted_filenames[:6]
+  most_recent_three = sorted_filenames[:3]
   write_out(sorted_filenames, directory_path, "postNames", "src/blog/posts.js")
   write_out(most_recent_three, directory_path, "recentPosts", "src/blog/recentPosts.js")
 

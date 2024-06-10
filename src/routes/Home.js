@@ -1,5 +1,5 @@
 import ConstructionIcon from '@mui/icons-material/Construction';
-import { Button, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { Image } from 'mui-image';
 import { useNavigate } from 'react-router-dom';
 import wip from '../assets/images/underConstructionIcon.png';
@@ -16,12 +16,18 @@ const Home = () => {
       <Typography variant='h4'>
         Welcome to my collection!
       </Typography>
-      <Image src={wip} fit='contain'/>
-      <Typography variant='subtitle1' sx={{borderBottom: '1px solid black'}}>
+      <Image src={wip} fit='contain' showLoading/>
+      <Typography variant='subtitle1' sx={{border: 'red 1px solid'}}>
         <ConstructionIcon />
         This website is currently under heavy construction.
         <ConstructionIcon />
       </Typography>
+      <Typography variant='subtitle1' sx={{borderBottom: '1px solid red'}}>
+      </Typography>
+      <br />
+      <br />
+      <br />
+      <br />
       <Typography variant='h2'>
         Recent Posts
       </Typography>
@@ -32,73 +38,16 @@ const Home = () => {
         posts={recentPosts}
         pageSize={3}
       />
-      <Button
+      {/* <Button
         variant='outlined'
         onClick={() => { navigate('/blog') }}
       >
         More Posts
-      </Button>
+      </Button> */}
       <Typography sx={{borderTop: '1px solid black'}}>
       </Typography>
     </Stack>
-    // <Box sx={{display: 'flex', alignContent: 'space-between', justifyContent: 'space-between'}}>
-    //   <Grid container spacing={2} direction='column'>
-    //     <Grid item xs>
-    //       <Typography variant='h1'>
-
-    //       </Typography>
-    //     </Grid>
-    //     <Grid item xs display='flex' justifyContent='center' alignItems='center'>
-    //       <Typography variant='subtitle1'>
-    //         Welcome to my collection!
-    //       </Typography>
-    //     </Grid>
-    //     <Grid item xs display='flex' justifyContent='center' alignItems='center'>
-    //       <Image src={wip} fit='contain'/>
-    //     </Grid>
-    //     <Grid item xs display='flex' justifyContent='center' alignItems='center'>
-    //       <Typography variant='subtitle1'>
-    //         This website is currently under heavy construction.
-    //       </Typography>
-    //     </Grid>
-    //     <Grid item xs display='flex' justifyContent='center' alignItems='center'>
-    //       <Typography variant='h2'>
-    //         Recent Posts
-    //       </Typography>
-    //     </Grid>
-    //     <Grid item xs display='flex' justifyContent='center' alignItems='center'>
-    //       <Articles
-    //         posts={recentPosts}
-    //         pageSize={3}
-    //       />
-    //     </Grid>
-    //     <Grid item xs display='flex' justifyContent='center' alignItems='center'>
-    //       <Button
-    //       variant='outlined'
-    //       onClick={() => { navigate('/blog') }}
-    //       >
-    //         More Posts
-    //       </Button>
-    //     </Grid>
-    //   </Grid>
-    // </Box>
   )
 }
 
 export default Home
-
-
-
-/*
-
-Home should have,
-
-          Header (4 rem)
-          (2 rem gap)
-xxx Some centered picture xxx
-xxx     Welcome ...       xxx
-x     Top Blog Posts?       x
-          (2 rem gap)
-          Footer? (4 rem)
-
-*/

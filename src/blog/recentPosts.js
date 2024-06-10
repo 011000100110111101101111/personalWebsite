@@ -20,26 +20,5 @@ export const recentPosts = [
 		date: '2024-02-16',
 		background: 'yubikeyLogo.png',
   },
-  {
-		id: 4,
-		title: 'Using Terraform Provider with Proxmox',
-		fullTitle: '2024-02-17-terraform_proxmox.md',
-		date: '2024-02-16',
-		background: 'terraformLogo.png',
-  },
-  {
-		id: 5,
-		title: 'Microceph Cluster Deployment Guide',
-		fullTitle: '2024-02-16-microceph_setup.md',
-		date: '2024-02-16',
-		background: 'containerLogo.png',
-  },
-  {
-		id: 6,
-		title: 'LXC Cluster w/ Microceph Deployment Guide',
-		fullTitle: '2024-02-16-lxc_setup.md',
-		date: '2024-02-16',
-		background: 'containerLogo.png',
-  },
 
 ]
